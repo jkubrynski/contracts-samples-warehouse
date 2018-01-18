@@ -1,6 +1,5 @@
 package com.acme.ecommerce.warehouse.contracts;
 
-import com.acme.ecommerce.warehouse.logistics.LogisticsService;
 import com.acme.ecommerce.warehouse.stocks.ProductStock;
 import com.acme.ecommerce.warehouse.stocks.StockController;
 import com.acme.ecommerce.warehouse.stocks.StockService;
@@ -9,20 +8,14 @@ import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.cloud.contract.verifier.messaging.boot.AutoConfigureMessageVerifier;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@AutoConfigureMessageVerifier
 public abstract class BaseContractTest {
-
-	@Autowired
-	LogisticsService logisticsService;
 
 	@Before
 	public void setUp() {
@@ -32,7 +25,4 @@ public abstract class BaseContractTest {
 		RestAssuredMockMvc.standaloneSetup(standaloneSetup(new StockController(stockService)));
 	}
 
-	protected void triggerPackageSentMessage() {
-		logisticsService.dispatchPackageSentMessage("7JS8HD8");
-	}
 }
